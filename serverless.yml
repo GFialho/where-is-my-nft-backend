@@ -50,7 +50,7 @@ custom:
   postgres:
     dbName: postgres
     username: nft
-    password: ${ssm:${self:custom.rdsSecretName}}
+    # password: ${ssm:${self:custom.rdsSecretName}}
     maxConnections:
       production: 100
     dbInstanceClass:
@@ -58,10 +58,10 @@ custom:
     allocatedStorage:
       production: "20"
     vpcCIDR: 10
-    host: ${ssm:${self:custom.rdsHostSecretPath}}
-  rdsSecretName: /rds/password-${self:custom.stage}
-  rdsHostSecretPath: /rds/host-${self:custom.stage}
-  rpcUrlSecretPath: /blockchain/rpc-${self:custom.stage}
+  #   host: ${ssm:${self:custom.rdsHostSecretPath}}
+  # rdsSecretName: /rds/password-${self:custom.stage}
+  # rdsHostSecretPath: /rds/host-${self:custom.stage}
+  # rpcUrlSecretPath: /blockchain/rpc-${self:custom.stage}
 
 functions:
   # - ${file(sls/functions/cron/itemsAnalytics.yml)}
