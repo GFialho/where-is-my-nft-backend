@@ -5,6 +5,8 @@ plugins:
   - serverless-esbuild
   # Plugin responsible for deleting past lambda version
   - serverless-prune-plugin
+  # Plugin for running the server locally and testing
+  - serverless-offline
 
 package:
   individually: true
@@ -30,7 +32,6 @@ provider:
     databaseName: ${self:custom.postgres.dbName}
     databasePassword: ${self:custom.postgres.password}
     databaseHost: ${self:custom.postgres.host}
-    rpcUrl: 123 #${ssm:${self:custom.rpcUrlSecretPath}}
   stackTags:
     service: where-is-my-nft-backend
 
@@ -50,7 +51,7 @@ custom:
   postgres:
     dbName: postgres
     username: nft
-    password: 123 # ${ssm:${self:custom.rdsSecretName}}
+    password: ${ssm:${self:custom.rdsSecretName}}
     maxConnections:
       production: 100
     dbInstanceClass:
@@ -58,17 +59,15 @@ custom:
     allocatedStorage:
       production: "20"
     vpcCIDR: 10
-    host: 123 #${ssm:${self:custom.rdsHostSecretPath}}
-  rdsSecretName: 123 #/rds/password-${self:custom.stage}
-  rdsHostSecretPath: 123 # /rds/host-${self:custom.stage}
-  rpcUrlSecretPath: 123 #/blockchain/rpc-${self:custom.stage}
+    host: ${ssm:${self:custom.rdsHostSecretPath}}
+  rdsSecretName: /rds/password-${self:custom.stage}
+  rdsHostSecretPath: /rds/host-${self:custom.stage}
 
 functions:
-  # - ${file(sls/functions/cron/itemsAnalytics.yml)}
 
 resources:
   # # RDS
-  # - ${file(sls/resources/rds/database.yml)}
-  # - ${file(sls/resources/rds/vpc.yml)}
+  - ${file(sls/resources/rds/database.yml)}
+  - ${file(sls/resources/rds/vpc.yml)}
   # PARAMETER STORE
   - ${file(sls/resources/parameter/database.yml)}
