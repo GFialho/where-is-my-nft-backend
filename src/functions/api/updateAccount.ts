@@ -9,7 +9,8 @@ export const handler = async (event: APIGatewayEvent) => {
   if (!address) return apiResponse(403, { message: "Address is required" });
   if (!event.body) return apiResponse(403, { message: "Body is required" });
 
-  const { nickname, description } = JSON.parse(event.body);
+  const { nickname, description, primaryColor, secondaryColor, textColor } =
+    JSON.parse(event.body);
 
   const { Signature } = event.headers;
 
@@ -27,11 +28,17 @@ export const handler = async (event: APIGatewayEvent) => {
     update: {
       nickname,
       description,
+      primaryColor,
+      secondaryColor,
+      textColor,
     },
     create: {
       nickname,
       description,
       address,
+      primaryColor,
+      secondaryColor,
+      textColor,
     },
   });
 
