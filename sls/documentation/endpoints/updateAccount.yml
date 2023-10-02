@@ -1,6 +1,6 @@
 summary: Update Account
 tags:
-  - Brand
+  - Account
 description: Update User's Account
 pathParams:
   - name: "address"

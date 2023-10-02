@@ -6,13 +6,16 @@ import { ethers } from "ethers";
 export const handler = async (event: APIGatewayEvent) => {
   const { address } = event.pathParameters as unknown as { address: string };
 
-  if (!address) return apiResponse(403, { message: "Address is required" });
+  if (!address) return apiResponse(401, { message: "Address is required" });
   if (!event.body) return apiResponse(403, { message: "Body is required" });
 
   const { nickname, description, primaryColor, secondaryColor, textColor } =
     JSON.parse(event.body);
 
   const { Authorization } = event.headers;
+
+  if (!Authorization)
+    return apiResponse(401, { message: "Missing Authorization Header" });
 
   const signer = ethers.verifyMessage(event.body, Authorization as any);
 

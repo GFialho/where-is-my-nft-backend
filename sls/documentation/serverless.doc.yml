@@ -3,7 +3,7 @@ documentation:
   title: "Where is My NFT API"
   description: "NFT Gallery api with all main functionalities of the software"
   servers:
-    url: https://twvwww90y3.execute-api.eu-central-1.amazonaws.com/dev/
+    url: https://wibf8p1cn6.execute-api.us-east-1.amazonaws.com/dev/
     description: Base API URL - DEV
   securitySchemes:
     Signature:
