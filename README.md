@@ -1,4 +1,4 @@
-# Gabriel Fialho NFT Gallery Challenge (Frontend)
+# Gabriel Fialho NFT Gallery Challenge (Backend)
 
 Backend system of the nft gallery ("Where is My NFT?"), a website where people can see NFTs from different users and customize their own collection. The technologies used are:
 
