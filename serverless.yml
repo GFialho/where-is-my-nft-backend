@@ -44,6 +44,7 @@ custom:
     packagerOptions:
       scripts:
         - npx prisma generate
+  documentation: ${file(sls/documentation/serverless.doc.yml):documentation}
 
   stage: ${opt:stage, 'dev'}
   prune:
