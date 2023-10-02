@@ -79,3 +79,5 @@ resources:
   # S3
   - ${file(sls/resources/s3/bucketPolicy.yml)}
   - ${file(sls/resources/s3/swaggerBucket.yml)}
+  # API GATEWAY
+  - ${file(sls/resources/apiGateway/response.yml)}
