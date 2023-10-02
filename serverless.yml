@@ -60,7 +60,7 @@ custom:
       dev: "20"
     vpcCIDR: 10
     host: ${ssm:${self:custom.rdsHostSecretPath}}
-  rdsSecretName: /rds/password-${self:custom.stage}
+  rdsSecretName: /rds/password
   rdsHostSecretPath: /rds/host-${self:custom.stage}
 
 functions:
