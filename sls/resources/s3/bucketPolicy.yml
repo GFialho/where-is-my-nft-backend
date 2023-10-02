@@ -11,6 +11,8 @@ Resources:
             Principal: "*"
             Action: s3:GetObject
             Resource: !Join ["", [!GetAtt Bucket.Arn, /*]]
+      DependsOn:
+        - Bucket
 
   MediaBucketPolicy:
     Type: AWS::S3::BucketPolicy
@@ -32,3 +34,5 @@ Resources:
             # Condition:
             #   StringEquals:
             #     AWS:SourceArn: !Sub "arn:aws:cloudfront::Id-of-IAM-User:distribution/${CloudFrontDistribution}"
+      DependsOn:
+        - Bucket
