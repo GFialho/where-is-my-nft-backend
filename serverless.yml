@@ -50,7 +50,7 @@ custom:
   postgres:
     dbName: postgres
     username: nft
-    # password: ${ssm:${self:custom.rdsSecretName}}
+    password: 123 # ${ssm:${self:custom.rdsSecretName}}
     maxConnections:
       production: 100
     dbInstanceClass:
