@@ -1,22 +1,22 @@
 documentation:
   version: "1"
-  title: "NFT Gallery API"
+  title: "Where is My NFT API"
   description: "NFT Gallery api with all main functionalities of the software"
   servers:
     url: https://twvwww90y3.execute-api.eu-central-1.amazonaws.com/dev/
     description: Base API URL - DEV
   securitySchemes:
-    FirebaseAuthorization:
+    Signature:
       type: apiKey
-      name: Authorization
+      name: Signature
       in: header
   security:
-    - FirebaseAuthorization: []
+    - Signature: []
 
   models:
-    # CREATE USER
-    - ${file(sls/documentation/models/createUser/request.yml)}
-    - ${file(sls/documentation/models/createUser/response.yml)}
+    - ${file(sls/documentation/models/getAccount/response.yml)}
+    - ${file(sls/documentation/models/updateAccount/request.yml)}
 
 endpoints:
-  createUser: ${file(sls/documentation/endpoints/createUser.yml)}
+  getAccount: ${file(sls/documentation/endpoints/getAccount.yml)}
+  updateAccount: ${file(sls/documentation/endpoints/updateAccount.yml)}

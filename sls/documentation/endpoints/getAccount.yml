@@ -1,0 +1,16 @@
+summary: Get Account
+tags:
+  - Account
+description: Get User's account
+pathParams:
+  - name: "address"
+    description: "The address of the user"
+    required: true
+    schema:
+      type: "string"
+methodResponses:
+  - statusCode: 200
+    responseBody:
+      description: Account response
+    responseModels:
+      application/json: GetAccountResponse

@@ -1,6 +1,7 @@
 service: where-is-my-nft
 
 plugins:
+  - serverless-openapi-documenter
   # Plugin responsible for translating typescript to javascript
   - serverless-esbuild
   # Plugin responsible for deleting past lambda version
@@ -62,12 +63,19 @@ custom:
     host: ${ssm:${self:custom.rdsHostSecretPath}}
   rdsSecretName: /rds/password
   rdsHostSecretPath: /rds/host-${self:custom.stage}
+  bucketName: where-is-my-nft-swagger-${self:custom.stage}
 
 functions:
+  - ${file(sls/functions/api/getAccount.yml)}
+  - ${file(sls/functions/api/updateAccount.yml)}
 
 resources:
-  # # RDS
+  # RDS
   - ${file(sls/resources/rds/database.yml)}
   - ${file(sls/resources/rds/vpc.yml)}
   # PARAMETER STORE
   - ${file(sls/resources/parameter/database.yml)}
+  # S3
+  - ${file(sls/resources/s3/bucketPolicy.yml)}
+  - ${file(sls/resources/s3/cloudfront.yml)}
+  - ${file(sls/resources/s3/swaggerBucket.yml)}

@@ -1,0 +1,20 @@
+summary: Update Account
+tags:
+  - Brand
+description: Update User's Account
+pathParams:
+  - name: "address"
+    description: "The address of the user"
+    required: true
+    schema:
+      type: "string"
+requestBody:
+  description: User infos object
+requestModels:
+  application/json: UpdateAccountRequest
+methodResponses:
+  - statusCode: 201
+    responseBody:
+      description: User updated response
+    responseModels:
+      application/json: GetAccountResponse

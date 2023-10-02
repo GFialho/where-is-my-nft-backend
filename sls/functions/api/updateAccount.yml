@@ -1,0 +1,10 @@
+UpdateAccount:
+  handler: src/functions/api/updateAccount.handler
+  memorySize: 512
+  timeout: 30
+  events:
+    - http:
+        path: account/{address}
+        method: PATCH
+        cors: true
+        documentation: ${file(sls/documentation/serverless.doc.yml):endpoints.updateAccount}

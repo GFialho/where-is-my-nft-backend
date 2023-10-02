@@ -1,8 +1,0 @@
-name: BrandCreatedResponse
-description: Create brand response body
-contentType: application/json
-schema:
-  $schema: http://json-schema.org/draft-04/schema#
-  properties:
-    message:
-      type: string

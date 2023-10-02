@@ -1,0 +1,10 @@
+GetAccount:
+  handler: src/functions/api/getAccount.handler
+  memorySize: 512
+  timeout: 30
+  events:
+    - http:
+        path: account/{address}
+        method: GET
+        cors: true
+        documentation: ${file(sls/documentation/serverless.doc.yml):endpoints.getAccount}
