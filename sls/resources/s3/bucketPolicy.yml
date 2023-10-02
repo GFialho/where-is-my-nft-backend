@@ -11,5 +11,3 @@ Resources:
             Principal: "*"
             Action: s3:GetObject
             Resource: !Join ["", [!GetAtt Bucket.Arn, /*]]
-      DependsOn:
-        - Bucket
