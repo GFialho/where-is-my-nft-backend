@@ -44,7 +44,7 @@ custom:
       scripts:
         - npx prisma generate
 
-  stage: ${opt:stage, 'production'}
+  stage: ${opt:stage, 'dev'}
   prune:
     automatic: true
     number: 1
@@ -53,11 +53,11 @@ custom:
     username: nft
     password: ${ssm:${self:custom.rdsSecretName}}
     maxConnections:
-      production: 100
+      dev: 100
     dbInstanceClass:
-      production: db.t4g.micro
+      dev: db.t4g.micro
     allocatedStorage:
-      production: "20"
+      dev: "20"
     vpcCIDR: 10
     host: ${ssm:${self:custom.rdsHostSecretPath}}
   rdsSecretName: /rds/password-${self:custom.stage}
