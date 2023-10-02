@@ -13,26 +13,3 @@ Resources:
             Resource: !Join ["", [!GetAtt Bucket.Arn, /*]]
       DependsOn:
         - Bucket
-
-  MediaBucketPolicy:
-    Type: AWS::S3::BucketPolicy
-    Properties:
-      Bucket: !Ref MediasBucket
-      PolicyDocument:
-        Statement:
-          - Sid: PublicReadForGetBucketObjects
-            Effect: Allow
-            Principal: "*"
-            Action: s3:GetObject
-            Resource: !Join ["", [!GetAtt MediasBucket.Arn, /*]]
-
-          - Effect: Allow
-            Principal:
-              Service: "cloudfront.amazonaws.com"
-            Action: "s3:GetObject"
-            Resource: !Join ["", [!GetAtt MediasBucket.Arn, /*]]
-            # Condition:
-            #   StringEquals:
-            #     AWS:SourceArn: !Sub "arn:aws:cloudfront::Id-of-IAM-User:distribution/${CloudFrontDistribution}"
-      DependsOn:
-        - Bucket

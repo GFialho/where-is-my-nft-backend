@@ -77,5 +77,4 @@ resources:
   - ${file(sls/resources/parameter/database.yml)}
   # S3
   - ${file(sls/resources/s3/bucketPolicy.yml)}
-  - ${file(sls/resources/s3/cloudfront.yml)}
   - ${file(sls/resources/s3/swaggerBucket.yml)}
