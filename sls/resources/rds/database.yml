@@ -1,0 +1,44 @@
+Resources:
+  # Since RDS is a server, we need to provide a whole architecture behind it!
+  WhereIsMyNFTSubnetGroup:
+    Type: AWS::RDS::DBSubnetGroup
+    Properties:
+      DBSubnetGroupDescription: "Postgres WhereIsMyNFT DB Subnet Group"
+      SubnetIds:
+        - Ref: WhereIsMyNFTPublicSubnetA
+        - Ref: WhereIsMyNFTPublicSubnetB
+        - Ref: WhereIsMyNFTPublicSubnetC
+
+  WhereIsMyNFTRDSParametersGroup:
+    Type: AWS::RDS::DBParameterGroup
+    Properties:
+      Description: "Parameter Group for RDS Instance"
+      Family: postgres15
+      Parameters:
+        max_connections: ${self:custom.postgres.maxConnections.${self:custom.stage}}
+        rds.logical_replication: 0
+        rds.force_ssl: 0
+
+  WhereIsMyNFTRDSInstance:
+    Type: "AWS::RDS::DBInstance"
+    DependsOn: DatabaseSecret
+    Properties:
+      MasterUsername: ${self:custom.postgres.username}
+      MasterUserPassword: ${self:custom.postgres.password}
+      DBInstanceClass: ${self:custom.postgres.dbInstanceClass.${self:custom.stage}}
+      BackupRetentionPeriod: 0
+      DBInstanceIdentifier: ${self:custom.postgres.dbName}
+      DBName: ${self:custom.postgres.dbName}
+      DBSubnetGroupName:
+        Ref: WhereIsMyNFTSubnetGroup
+      DBParameterGroupName:
+        Ref: WhereIsMyNFTRDSParametersGroup
+      VPCSecurityGroups:
+        - Ref: WhereIsMyNFTSecurityGroup
+      Engine: postgres
+      MultiAZ: false
+      EngineVersion: "15.3"
+      PubliclyAccessible: true
+      AllocatedStorage: ${self:custom.postgres.allocatedStorage.${self:custom.stage}}
+      StorageType: gp2
+      EnablePerformanceInsights: false

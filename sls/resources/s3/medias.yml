@@ -1,0 +1,7 @@
+Resources:
+  MediasBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: ${self:custom.mediasBucket}
+      PublicAccessBlockConfiguration:
+        BlockPublicPolicy: False

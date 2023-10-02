@@ -1,0 +1,34 @@
+Resources:
+  # Public Read Bucket
+  BucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref Bucket
+      PolicyDocument:
+        Statement:
+          - Sid: PublicReadForGetBucketObjects
+            Effect: Allow
+            Principal: "*"
+            Action: s3:GetObject
+            Resource: !Join ["", [!GetAtt Bucket.Arn, /*]]
+
+  MediaBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref MediasBucket
+      PolicyDocument:
+        Statement:
+          - Sid: PublicReadForGetBucketObjects
+            Effect: Allow
+            Principal: "*"
+            Action: s3:GetObject
+            Resource: !Join ["", [!GetAtt MediasBucket.Arn, /*]]
+
+          - Effect: Allow
+            Principal:
+              Service: "cloudfront.amazonaws.com"
+            Action: "s3:GetObject"
+            Resource: !Join ["", [!GetAtt MediasBucket.Arn, /*]]
+            # Condition:
+            #   StringEquals:
+            #     AWS:SourceArn: !Sub "arn:aws:cloudfront::Id-of-IAM-User:distribution/${CloudFrontDistribution}"

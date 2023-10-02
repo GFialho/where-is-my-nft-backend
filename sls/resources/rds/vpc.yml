@@ -1,0 +1,115 @@
+Resources:
+  # Since RDS is a server, we need to provide a whole architecture behind it!
+  # Database VPC so it can communicate to other services and to keep track of VPCs
+  WhereIsMyNFTRDSVPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: ${self:custom.postgres.vpcCIDR}.0.0.0/16
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      InstanceTenancy: default
+      Tags:
+        - Key: Name
+          Value: RDS VPC with 3 public Subnets
+
+  WhereIsMyNFTInternetGateway:
+    Type: AWS::EC2::InternetGateway
+
+  WhereIsMyNFTAttachGateway:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId:
+        Ref: WhereIsMyNFTRDSVPC
+      InternetGatewayId:
+        Ref: WhereIsMyNFTInternetGateway
+
+  WhereIsMyNFTSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: "Allow http client to connect to our database"
+      VpcId:
+        Ref: WhereIsMyNFTRDSVPC
+      SecurityGroupIngress:
+        - IpProtocol: -1
+          FromPort: 0
+          ToPort: 65535
+          CidrIp: 0.0.0.0/0
+
+  WhereIsMyNFTPublicSubnetA:
+    DependsOn: WhereIsMyNFTRDSVPC
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId:
+        Ref: WhereIsMyNFTRDSVPC
+      AvailabilityZone: ${self:provider.region}a
+      CidrBlock: ${self:custom.postgres.vpcCIDR}.0.0.0/24
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: Name
+          Value: RDS Public Subnet AZA
+
+  WhereIsMyNFTPublicSubnetB:
+    DependsOn: WhereIsMyNFTRDSVPC
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId:
+        Ref: WhereIsMyNFTRDSVPC
+      AvailabilityZone: ${self:provider.region}b
+      CidrBlock: ${self:custom.postgres.vpcCIDR}.0.1.0/24
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: Name
+          Value: RDS Public Subnet AZB
+
+  WhereIsMyNFTPublicSubnetC:
+    DependsOn: WhereIsMyNFTRDSVPC
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId:
+        Ref: WhereIsMyNFTRDSVPC
+      AvailabilityZone: ${self:provider.region}c
+      CidrBlock: ${self:custom.postgres.vpcCIDR}.0.2.0/24
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: Name
+          Value: RDS Public Subnet AZC
+
+  WhereIsMyNFTRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId:
+        Ref: WhereIsMyNFTRDSVPC
+
+  WhereIsMyNFTRouteTable1Association:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId:
+        Ref: WhereIsMyNFTPublicSubnetA
+      RouteTableId:
+        Ref: WhereIsMyNFTRouteTable
+
+  WhereIsMyNFTRouteTable2Association:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId:
+        Ref: WhereIsMyNFTPublicSubnetB
+      RouteTableId:
+        Ref: WhereIsMyNFTRouteTable
+
+  WhereIsMyNFTRouteTable3Association:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId:
+        Ref: WhereIsMyNFTPublicSubnetC
+      RouteTableId:
+        Ref: WhereIsMyNFTRouteTable
+
+  WhereIsMyNFTInternetRouteRule:
+    Type: AWS::EC2::Route
+    DependsOn: WhereIsMyNFTAttachGateway
+    Properties:
+      RouteTableId:
+        Ref: WhereIsMyNFTRouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId:
+        Ref: WhereIsMyNFTInternetGateway
