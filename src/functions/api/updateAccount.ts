@@ -12,9 +12,9 @@ export const handler = async (event: APIGatewayEvent) => {
   const { nickname, description, primaryColor, secondaryColor, textColor } =
     JSON.parse(event.body);
 
-  const { Signature } = event.headers;
+  const { Authorization } = event.headers;
 
-  const signer = ethers.verifyMessage(event.body, Signature as any);
+  const signer = ethers.verifyMessage(event.body, Authorization as any);
 
   if (signer !== address)
     return apiResponse(401, { message: "Not Authorized" });
