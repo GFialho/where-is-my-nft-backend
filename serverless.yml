@@ -30,7 +30,7 @@ provider:
     databaseName: ${self:custom.postgres.dbName}
     databasePassword: ${self:custom.postgres.password}
     databaseHost: ${self:custom.postgres.host}
-    rpcUrl: ${ssm:${self:custom.rpcUrlSecretPath}}
+    rpcUrl: 123 #${ssm:${self:custom.rpcUrlSecretPath}}
   stackTags:
     service: where-is-my-nft-backend
 
