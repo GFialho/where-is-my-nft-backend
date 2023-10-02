@@ -6,8 +6,9 @@
     "typescript": "^5.2.2"
   },
   "devDependencies": {
+    "esbuild": "^0.19.4",
     "prisma": "^5.3.1",
-    "serverless-esbuild": "^1.43.1",
+    "serverless-esbuild": "^1.48.4",
     "serverless-offline": "^13.1.2",
     "serverless-openapi-documenter": "^0.0.90",
     "serverless-prune-plugin": "^2.0.2"
