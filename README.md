@@ -39,7 +39,7 @@ The typescript code is in `src/functions/api` for both `getAccount` and `updateA
 - nickname: name to show on user's collection page
 - description: description to show on user's collection page
 
-2. `updateAccount` - endpoint to create or update users preferences shown above.
+2. `updateAccount` - endpoint to create or update users preferences shown above. This endpoint verifies the web3 message signature to make sure that the one that is calling is the owner of the account.
 
 ## Documentation
 
